@@ -7,7 +7,7 @@
       "name": "Depurar con ts-node",
       "skipFiles": ["<node_internals>/**"],
       "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/ts-node",
-      "program": "${workspaceFolder}/app.ts",
+      "program": "${workspaceFolder}/src/app.ts",
       "sourceMaps": true,
       "outFiles": ["${workspaceFolder}/dist/**/*.js"],
       "console": "integratedTerminal"
