@@ -1,0 +1,58 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+
+model Usuario {
+  id         Int            @id @default(autoincrement())
+  nombre     String
+  email      String         @unique
+  password   String
+  rol        Rol
+  creado_en  DateTime       @default(now())
+  proyectosCreados Proyecto[] @relation("CreadorProyectos")
+  usuarioProyectos UsuarioProyecto[]
+}
+
+model Proyecto {
+  id             Int               @id @default(autoincrement())
+  titulo         String
+  descripcion    String
+  contacto_email String?
+  contacto_campus String?
+  ganador        Boolean            @default(false)
+  creado_en      DateTime           @default(now())
+  convocatoria   Convocatoria?      @relation(fields: [convocatoriaId], references: [id])
+  convocatoriaId Int?
+  creador        Usuario            @relation("CreadorProyectos", fields: [creadoPorId], references: [id])
+  creadoPorId    Int
+  usuarioProyectos UsuarioProyecto[]
+}
+
+model Convocatoria {
+  id         Int        @id @default(autoincrement())
+  titulo     String
+  descripcion String
+  abierta    Boolean    @default(true)
+  creada_en  DateTime   @default(now())
+  proyectos  Proyecto[]
+}
+
+model UsuarioProyecto {
+  id          Int      @id @default(autoincrement())
+  usuario     Usuario  @relation(fields: [usuarioId], references: [id])
+  usuarioId   Int
+  proyecto    Proyecto @relation(fields: [proyectoId], references: [id])
+  proyectoId  Int
+}
+
+enum Rol {
+  FINAL
+  STAFF
+  ADMIN
+}
