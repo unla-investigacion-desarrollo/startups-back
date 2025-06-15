@@ -1,86 +1,31 @@
-# ### 🔹 Obtener todos los posts
-# GET http://localhost:3000/api/posts
-# Content-Type: application/json
+@baseUrl = http://localhost:3000
+@contentType = application/json
 
-# ###
+### Creación de un nuevo usuario
+POST {{baseUrl}}/api/auth/register
+Content-Type: {{contentType}}
 
-# ### 🔹 Crear un nuevo post
-# POST http://localhost:3000/api/posts
-# Content-Type: application/json
+{
+  "nombre": "Usuario Prueba",
+  "email": "usuario@ejemplo.com",
+  "password": "contraseña123",
+  "rol": "FINAL"
+}
 
-# {
-#   "title": "Mi primer post",
-#   "content": "Contenido de prueba",
-#   "published": true
-# }
+### Iniciar sesión (login)
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
 
-# ###
+{
+  "email": "usuario@ejemplo.com",
+  "password": "contraseña123"
+}
 
-# ### 🔹 Obtener post por ID
-# GET http://localhost:3000/api/posts/1
-# Content-Type: application/json
+### Obtener usuario actual (requiere estar autenticado)
+GET {{baseUrl}}/api/auth/me
+Content-Type: {{contentType}}
 
-# ###
+### Cerrar sesión
+POST {{baseUrl}}/api/auth/logout
+Content-Type: {{contentType}}
 
-# ### 🔹 Borrar post por ID
-# DELETE http://localhost:3000/api/posts/1
-# Content-Type: application/json
-
-# ###
-
-# ### 🔹 Ver comentarios del post (por ID)
-# GET http://localhost:3000/api/comments/1
-# Content-Type: application/json
-
-# ###
-
-# ### 🔹 Agregar comentario al post (por ID)
-# POST http://localhost:3000/api/comments/1
-# Content-Type: application/json
-
-# {
-#   "content": "Gran post, gracias!"
-# }
-
-# ###
-
-# ### 🔹 Crear nuevo usuario
-# POST http://localhost:3000/api/users/register
-# Content-Type: application/json
-
-# {
-#   "username": "juanito",
-#   "email": "juan@email.com",
-#   "password": "123456"
-# }
-
-# ###
-
-# ### 🔹 Obtener todos los usuarios
-# GET http://localhost:3000/api/users
-# Content-Type: application/json
-
-# ### 🔹 Login con passport (authRoutes)
-# POST http://localhost:3000/api/login
-# Content-Type: application/json
-
-# {
-#   "username": "juanito",
-#   "password": "123456"
-# }
-
-# ###
-
-# ### 🔹 Cerrar sesión (authRoutes)
-# POST http://localhost:3000/api/logout
-# Content-Type: application/json
-
-# ###
-
-# ### 🔹 Obtener usuario actual (authRoutes)
-# GET http://localhost:3000/api/me
-# Content-Type: application/json
-
-# ###
-
-# ###
