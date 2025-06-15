@@ -87,3 +87,20 @@ export const isAdmin = (req: Request, res: Response, next: NextFunction): void =
   // Si es admin, continúa con la siguiente función
   next();
 };
+
+export const isStaff = (req: Request, res: Response, next: NextFunction): void => {
+  // Primero verifica que el usuario esté autenticado
+  if (!req.isAuthenticated()) {
+    res.status(401).json({ message: 'No autenticado' });
+    return;
+  }
+
+  // Luego verifica si el rol es STAFF o ADMIN
+  if (req.user?.rol !== 'STAFF' && req.user?.rol !== 'ADMIN') {
+    res.status(403).json({ message: 'Acceso denegado. Se requieren permisos de staff o administrador' });
+    return;
+  }
+
+  // Si es staff o admin, continúa con la siguiente función
+  next();
+};

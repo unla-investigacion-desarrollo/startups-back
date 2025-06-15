@@ -6,10 +6,10 @@ POST {{baseUrl}}/api/auth/register
 Content-Type: {{contentType}}
 
 {
-  "nombre": "ADMIN",
-  "email": "admin@gmail.com",
+  "nombre": "STAFF",
+  "email": "staff@gmail.com",
   "password": "123",
-  "rol": "ADMIN"
+  "rol": "STAFF"
 }
 
 ### Iniciar sesión (login)
@@ -17,7 +17,7 @@ POST {{baseUrl}}/api/auth/login
 Content-Type: {{contentType}}
 
 {
-  "email": "admin@gmail.com",
+  "email": "staff@gmail.com",
   "password": "123"
 }
 
