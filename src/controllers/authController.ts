@@ -71,3 +71,19 @@ export const isAuthenticated = (req: Request, res: Response, next: NextFunction)
   res.status(401).json({ message: 'Inicia sesión para realizar esta acción' });
 };
 
+export const isAdmin = (req: Request, res: Response, next: NextFunction): void => {
+  // Primero verifica que el usuario esté autenticado
+  if (!req.isAuthenticated()) {
+    res.status(401).json({ message: 'No autenticado' });
+    return;
+  }
+
+  // Luego verifica si el rol es ADMIN
+  if (req.user?.rol !== 'ADMIN') {
+    res.status(403).json({ message: 'Acceso denegado. Se requieren permisos de administrador' });
+    return;
+  }
+
+  // Si es admin, continúa con la siguiente función
+  next();
+};

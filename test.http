@@ -6,10 +6,10 @@ POST {{baseUrl}}/api/auth/register
 Content-Type: {{contentType}}
 
 {
-  "nombre": "Usuario Prueba",
-  "email": "usuario@ejemplo.com",
-  "password": "contraseña123",
-  "rol": "FINAL"
+  "nombre": "ADMIN",
+  "email": "admin@gmail.com",
+  "password": "123",
+  "rol": "ADMIN"
 }
 
 ### Iniciar sesión (login)
@@ -17,8 +17,8 @@ POST {{baseUrl}}/api/auth/login
 Content-Type: {{contentType}}
 
 {
-  "email": "usuario@ejemplo.com",
-  "password": "contraseña123"
+  "email": "admin@gmail.com",
+  "password": "123"
 }
 
 ### Obtener usuario actual (requiere estar autenticado)
@@ -29,3 +29,15 @@ Content-Type: {{contentType}}
 POST {{baseUrl}}/api/auth/logout
 Content-Type: {{contentType}}
 
+### Actualizar rol de usuario (requiere ser admin)
+PUT {{baseUrl}}/api/users/update-role
+Content-Type: {{contentType}}
+
+{
+  "userId": 2,
+  "newRole": "STAFF"
+}
+
+### Obtener todos los usuarios (requiere ser admin)
+GET {{baseUrl}}/api/users
+Content-Type: {{contentType}}

@@ -6,6 +6,8 @@ import morgan from 'morgan';
 
 import routes from './routes/index';
 import authRoutes from './routes/authRoutes';
+import userRoutes from './routes/userRoutes';
+
 import { configurePassport } from './config/passport';
 
 // Declara los módulos para TypeScript
@@ -51,6 +53,7 @@ configurePassport();
 
 // Rutas
 app.use('/api', routes);
+app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 
 // Ruta por defecto
