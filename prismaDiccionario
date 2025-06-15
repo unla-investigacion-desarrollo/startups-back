@@ -1,0 +1,8 @@
+| Acción     | Método Prisma                  |
+| ---------- | ------------------------------ |
+| GET muchos | `findMany`                     |
+| GET uno    | `findUnique`                   |
+| INSERT     | `create`                       |
+| UPDATE     | `update`                       |
+| DELETE     | `delete`                       |
+| Relación   | `connect`, `include`, `create` |
