@@ -4,9 +4,10 @@ import passport from 'passport';
 import cors from 'cors';
 import morgan from 'morgan';
 
-import routes from './routes/index';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
+import convocatoriasRoutes from './routes/convocarotiaRoutes';
+
 
 import { configurePassport } from './config/passport';
 
@@ -52,9 +53,9 @@ app.use(passport.session());
 configurePassport();
 
 // Rutas
-app.use('/api', routes);
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
+app.use('/api/convocatorias', convocatoriasRoutes);
 
 // Ruta por defecto
 app.get('/', (req: Request, res: Response) => {

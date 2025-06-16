@@ -41,3 +41,43 @@ Content-Type: {{contentType}}
 ### Obtener todos los usuarios (requiere ser admin)
 GET {{baseUrl}}/api/users
 Content-Type: {{contentType}}
+
+
+### Obtener todas las convocatorias
+GET {{baseUrl}}/api/convocatorias
+Content-Type: {{contentType}}
+
+### Crear una nueva convocatoria (requiere ser STAFF/ADMIN)
+POST {{baseUrl}}/api/convocatorias
+Content-Type: {{contentType}}
+
+{
+  "titulo": "Convocatoria de Proyectos Innovadores 2025",
+  "descripcion": "Buscamos proyectos innovadores en el campo de la tecnología y sostenibilidad",
+  "abierta": true
+}
+
+### Obtener una convocatoria específica por ID
+GET {{baseUrl}}/api/convocatorias/1
+Content-Type: {{contentType}}
+
+### Obtener proyectos de una convocatoria
+GET {{baseUrl}}/api/convocatorias/1/proyectos
+Content-Type: {{contentType}}
+
+### Actualizar una convocatoria (requiere ser STAFF/ADMIN)
+PUT {{baseUrl}}/api/convocatorias/2
+Content-Type: {{contentType}}
+
+{
+  "titulo": "Convocatoria Actualizada 2025",
+  "descripcion": "Descripción actualizada para la convocatoria"
+}
+
+### Abrir/Cerrar una convocatoria (requiere ser STAFF/ADMIN)
+PATCH {{baseUrl}}/api/convocatorias/2/toggle-abierta
+Content-Type: {{contentType}}
+
+### Eliminar una convocatoria (requiere ser STAFF/ADMIN)
+DELETE {{baseUrl}}/api/convocatorias/1
+Content-Type: {{contentType}}
