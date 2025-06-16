@@ -1,18 +1,53 @@
 @baseUrl = http://localhost:3000
 @contentType = application/json
 
-### Creación de un nuevo usuario
+//========================================================================
+// AUTENTICACIÓN DE USUARIOS
+//========================================================================
+
+### Registrar un nuevo usuario
 POST {{baseUrl}}/api/auth/register
 Content-Type: {{contentType}}
 
 {
-  "nombre": "STAFF",
+  "nombre": "Usuario Prueba",
+  "email": "usuario@gmail.com",
+  "password": "123",
+  "rol": "FINAL"
+}
+
+### Registrar un usuario STAFF
+POST {{baseUrl}}/api/auth/register
+Content-Type: {{contentType}}
+
+{
+  "nombre": "Staff Usuario",
   "email": "staff@gmail.com",
   "password": "123",
   "rol": "STAFF"
 }
 
-### Iniciar sesión (login)
+### Registrar un usuario ADMIN
+POST {{baseUrl}}/api/auth/register
+Content-Type: {{contentType}}
+
+{
+  "nombre": "Admin Usuario",
+  "email": "admin@gmail.com",
+  "password": "123",
+  "rol": "ADMIN"
+}
+
+### Iniciar sesión como usuario FINAL
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "usuario@gmail.com",
+  "password": "123"
+}
+
+### Iniciar sesión como STAFF
 POST {{baseUrl}}/api/auth/login
 Content-Type: {{contentType}}
 
@@ -21,7 +56,16 @@ Content-Type: {{contentType}}
   "password": "123"
 }
 
-### Obtener usuario actual (requiere estar autenticado)
+### Iniciar sesión como ADMIN
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "admin@gmail.com",
+  "password": "123"
+}
+
+### Obtener usuario actual (whoami)
 GET {{baseUrl}}/api/auth/me
 Content-Type: {{contentType}}
 
@@ -29,7 +73,15 @@ Content-Type: {{contentType}}
 POST {{baseUrl}}/api/auth/logout
 Content-Type: {{contentType}}
 
-### Actualizar rol de usuario (requiere ser admin)
+//========================================================================
+// GESTIÓN DE USUARIOS (ADMIN)
+//========================================================================
+
+### Obtener lista de todos los usuarios (requiere STAFF/ADMIN)
+GET {{baseUrl}}/api/users
+Content-Type: {{contentType}}
+
+### Actualizar rol de usuario (solo ADMIN)
 PUT {{baseUrl}}/api/users/update-role
 Content-Type: {{contentType}}
 
@@ -38,16 +90,27 @@ Content-Type: {{contentType}}
   "newRole": "STAFF"
 }
 
-### Obtener todos los usuarios (requiere ser admin)
-GET {{baseUrl}}/api/users
-Content-Type: {{contentType}}
+//========================================================================
+// GESTIÓN DE CONVOCATORIAS
+//========================================================================
 
-
-### Obtener todas las convocatorias
+### Obtener todas las convocatorias (público)
 GET {{baseUrl}}/api/convocatorias
 Content-Type: {{contentType}}
 
-### Crear una nueva convocatoria (requiere ser STAFF/ADMIN)
+### Obtener una convocatoria específica (público)
+GET {{baseUrl}}/api/convocatorias/1
+Content-Type: {{contentType}}
+
+### Obtener convocatoria con todos sus proyectos detallados (público)
+GET {{baseUrl}}/api/convocatorias/1/detalle
+Content-Type: {{contentType}}
+
+### Obtener solo los proyectos de una convocatoria (público)
+GET {{baseUrl}}/api/convocatorias/1/proyectos
+Content-Type: {{contentType}}
+
+### Crear una nueva convocatoria (requiere STAFF/ADMIN)
 POST {{baseUrl}}/api/convocatorias
 Content-Type: {{contentType}}
 
@@ -57,27 +120,142 @@ Content-Type: {{contentType}}
   "abierta": true
 }
 
-### Obtener una convocatoria específica por ID
-GET {{baseUrl}}/api/convocatorias/1
-Content-Type: {{contentType}}
-
-### Obtener proyectos de una convocatoria
-GET {{baseUrl}}/api/convocatorias/1/proyectos
-Content-Type: {{contentType}}
-
-### Actualizar una convocatoria (requiere ser STAFF/ADMIN)
-PUT {{baseUrl}}/api/convocatorias/2
+### Actualizar una convocatoria existente (requiere STAFF/ADMIN)
+PUT {{baseUrl}}/api/convocatorias/1
 Content-Type: {{contentType}}
 
 {
   "titulo": "Convocatoria Actualizada 2025",
-  "descripcion": "Descripción actualizada para la convocatoria"
+  "descripcion": "Nueva descripción para la convocatoria actualizada"
 }
 
-### Abrir/Cerrar una convocatoria (requiere ser STAFF/ADMIN)
-PATCH {{baseUrl}}/api/convocatorias/2/toggle-abierta
+### Abrir/Cerrar convocatoria (requiere STAFF/ADMIN)
+PATCH {{baseUrl}}/api/convocatorias/1/toggle-abierta
 Content-Type: {{contentType}}
 
-### Eliminar una convocatoria (requiere ser STAFF/ADMIN)
+### Eliminar una convocatoria (requiere STAFF/ADMIN)
 DELETE {{baseUrl}}/api/convocatorias/1
+Content-Type: {{contentType}}
+
+//========================================================================
+// GESTIÓN DE PROYECTOS
+//========================================================================
+
+### Obtener todos los proyectos (público)
+GET {{baseUrl}}/api/proyectos
+Content-Type: {{contentType}}
+
+### Obtener proyectos ganadores (público)
+GET {{baseUrl}}/api/proyectos/ganadores
+Content-Type: {{contentType}}
+
+### Obtener un proyecto específico (público)
+GET {{baseUrl}}/api/proyectos/1
+Content-Type: {{contentType}}
+
+### Obtener mis proyectos (requiere autenticación)
+GET {{baseUrl}}/api/proyectos/usuario/mis-proyectos
+Content-Type: {{contentType}}
+
+### Crear un nuevo proyecto (requiere autenticación)
+POST {{baseUrl}}/api/proyectos
+Content-Type: {{contentType}}
+
+{
+  "titulo": "Mi Proyecto Innovador",
+  "descripcion": "Este es un proyecto que resuelve problemas importantes",
+  "contacto_email": "contacto@proyecto.com",
+  "contacto_campus": "@usuario_campus",
+  "convocatoriaId": 1
+}
+
+### Actualizar mi proyecto (requiere ser creador o STAFF/ADMIN)
+PUT {{baseUrl}}/api/proyectos/1
+Content-Type: {{contentType}}
+
+{
+  "titulo": "Mi Proyecto Actualizado",
+  "descripcion": "Descripción mejorada del proyecto",
+  "convocatoriaId": 1
+}
+
+### Marcar/Desmarcar proyecto como ganador (requiere STAFF/ADMIN)
+PATCH {{baseUrl}}/api/proyectos/1/toggle-ganador
+Content-Type: {{contentType}}
+
+### Eliminar un proyecto (requiere ser creador o ADMIN)
+DELETE {{baseUrl}}/api/proyectos/1
+Content-Type: {{contentType}}
+
+//========================================================================
+// FLUJO COMPLETO DE DEMOSTRACIÓN
+//========================================================================
+
+### 1. Login como STAFF para crear convocatoria
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "username": "staff@gmail.com",
+  "password": "123"
+}
+
+### 2. Crear una convocatoria como STAFF
+POST {{baseUrl}}/api/convocatorias
+Content-Type: {{contentType}}
+
+{
+  "titulo": "Demo: Convocatoria de Proyectos Tecnológicos 2025",
+  "descripcion": "Convocatoria para proyectos innovadores en diferentes áreas tecnológicas",
+  "abierta": true
+}
+
+### 3. Cerrar sesión de STAFF
+POST {{baseUrl}}/api/auth/logout
+Content-Type: {{contentType}}
+
+### 4. Login como usuario FINAL
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "username": "usuario@gmail.com",
+  "password": "123"
+}
+
+### 5. Crear un proyecto como usuario FINAL
+POST {{baseUrl}}/api/proyectos
+Content-Type: {{contentType}}
+
+{
+  "titulo": "Demo: App de gestión sustentable",
+  "descripcion": "Una aplicación que ayuda a las empresas a gestionar sus recursos de manera sostenible",
+  "contacto_email": "contacto@demo.com",
+  "contacto_campus": "@usuario_demo",
+  "convocatoriaId": 1
+}
+
+### 6. Cerrar sesión de usuario FINAL
+POST {{baseUrl}}/api/auth/logout
+Content-Type: {{contentType}}
+
+### 7. Login como STAFF para revisar y marcar ganador
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "username": "staff@gmail.com",
+  "password": "123"
+}
+
+### 8. Ver detalles de la convocatoria con sus proyectos
+GET {{baseUrl}}/api/convocatorias/1/detalle
+Content-Type: {{contentType}}
+
+### 9. Marcar proyecto como ganador
+PATCH {{baseUrl}}/api/proyectos/1/toggle-ganador
+Content-Type: {{contentType}}
+
+### 10. Ver proyectos ganadores
+GET {{baseUrl}}/api/proyectos/ganadores
 Content-Type: {{contentType}}

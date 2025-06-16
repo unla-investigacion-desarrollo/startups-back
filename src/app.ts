@@ -7,6 +7,7 @@ import morgan from 'morgan';
 import authRoutes from './routes/authRoutes';
 import userRoutes from './routes/userRoutes';
 import convocatoriasRoutes from './routes/convocarotiaRoutes';
+import proyectoRoutes from './routes/proyectoRoutes';
 
 
 import { configurePassport } from './config/passport';
@@ -56,6 +57,8 @@ configurePassport();
 app.use('/api/users', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/convocatorias', convocatoriasRoutes);
+app.use('/api/proyectos', proyectoRoutes);
+
 
 // Ruta por defecto
 app.get('/', (req: Request, res: Response) => {
